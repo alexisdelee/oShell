@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>oShell</title>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      #search {
+        position: absolute;
+        top: 10px;
+        left: 0;
+        padding-left: 10px;
+        width: 100%;
+        box-sizing: border-box;
+        border-color: transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <input id="search" placeholder="Command line..." autofocus></input>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect("192.168.1.22:8080");
+        var shell = document.querySelector("#search");
+
+        document.body.addEventListener("keydown", (e) => {
+          if(e.keyCode == 13){
+            socket.emit("message", shell.value);
+            shell.value = "";
+          }
+        });
+
+        socket.on("message", (message) => {
+          console.log(message.stdout);
+          console.log(message.stderr);
+        });
+    </script>
+  </body>
+</html>
