@@ -36,8 +36,11 @@
         });
 
         socket.on("message", (message) => {
-          console.log(message.stdout);
-          console.log(message.stderr);
+          Object.keys(message).forEach((id) => {
+            if(!!message[id]){
+              console.log(message[id]);
+            }
+          });
         });
     </script>
   </body>
