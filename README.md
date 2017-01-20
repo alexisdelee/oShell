@@ -4,14 +4,14 @@
 
 Avoir accès au shell du pc A sur le pc B :  
 - exécuter  __``oShell.exe``__ sur le pc A 
-- sélectionner l'adresse et le port voulus (supposons 192.168.1.54 et :8080) 
+- sélectionner l'adresse et le port voulus (supposons 192.168.1.54 et 8080) 
 - ouvrir un navigateur connecté au même réseau sur le pc B et aller à l'adresse suivante 192.168.1.54:8080 
 
 Une fois sur cette page, vous avez accès au shell du pc A. Les sorties standards et d'erreurs seront redirigées dans la console du navigateur.
 
 ## Remarques
 
-Hash sha256 du fichier  __``oShell.exe``__ : 39e847cedbba7136fbd3b594bf77fe7447d9eb3c076a6d2e8a97549c3ce382e6
+Hash sha256 du fichier  __``oShell.exe``__ : e060e0002938f1776bff6c44313ee2aeca48b01efd224cfca7e480dc70e988d0
 
 Il est possible d'exécuter **oShell** avec node.js : ``node oShell.js``
 
