@@ -4,12 +4,11 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node oShell.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "globby": "^6.1.0",
     "inquirer": "^2.0.0",
     "socket.io": "^1.7.2"
   },

@@ -7,30 +7,79 @@
       * {
         margin: 0;
         padding: 0;
+        background: #2D2D2D;
+      }
+
+      input:focus {
+        outline-width: 0;
+      }
+
+      #shell {
+        box-sizing: border-box;
+        width: 100%;
+      }
+
+      header {
+        display: inline-block;
+        padding: 4px 10px;
+        background: #6998CC;
+        font-family: "Lucida Console";
+        font-size: 14px;
+        color: #2D2D2D;
       }
 
       #search {
-        position: absolute;
-        top: 10px;
+        display: inline-block;
+        position: relative;
         left: 0;
-        padding-left: 10px;
-        width: 100%;
-        box-sizing: border-box;
+        padding: 2px;
         border-color: transparent;
+        font-family: "Lucida Console";
+        color: #CCD7AF;
+      }
+
+      footer {
+        position: absolute;
+        top: 26px;
+        left: 4px;
+        bottom: 0px;
+        right: 4px;
+        font-family: "Lucida Console";
+        font-size: 13px;
+      }
+
+      .stdout {
+        color: #D8C8B8;
+      }
+
+      .stderr {
+        color: #B63C2E;
+        font-weight: bold;
       }
     </style>
   </head>
   <body>
-    <input id="search" placeholder="Command line..." autofocus></input>
+    <div id="shell">
+      <header></header>
+      <input id="search" autofocus></input>
+      <footer></footer>
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io.connect("192.168.1.22:8080");
+        var header = document.querySelector("header");
         var shell = document.querySelector("#search");
+        var footer = document.querySelector("footer");
 
         document.body.addEventListener("keydown", (e) => {
           if(e.keyCode == 13){
-            socket.emit("message", shell.value);
+            if(shell.value == "cls" || shell.value == "clear"){
+              footer.innerHTML = "";
+            } else {
+              socket.emit("message", shell.value);
+            }
+
             shell.value = "";
           }
         });
@@ -38,7 +87,11 @@
         socket.on("message", (message) => {
           Object.keys(message).forEach((id) => {
             if(!!message[id]){
-              console.log(message[id]);
+              if(id == "basedir"){
+                header.textContent = message[id];
+              } else {
+                footer.innerHTML = "<div class=\"" + id + "\">" + message[id].replace(/\n/g, "<br>") + "</div><br>" + footer.innerHTML;
+              }
             }
           });
         });
